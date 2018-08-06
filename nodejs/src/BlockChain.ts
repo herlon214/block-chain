@@ -14,7 +14,7 @@ class BlockChain {
       new Date('Sun Aug 05 2018 21:49:36 GMT-0400 (Amazon Standard Time)'),
       '{"totalCoins": 1000}',
       '',
-      this.difficulty
+      this.difficulty,
     );
   }
 
@@ -27,14 +27,20 @@ class BlockChain {
     const index = latestBlock.index + 1;
     const timestamp = new Date();
 
-    const block = new Block(index, timestamp, data, latestBlock.hash, this.difficulty);
+    const block = new Block(
+      index,
+      timestamp,
+      data,
+      latestBlock.hash,
+      this.difficulty,
+    );
     block.mine();
 
     this.chain.push(block);
   }
 
-  isValid (): boolean {
-    for(let i = 1; i < this.chain.length; i ++) {
+  isValid(): boolean {
+    for (let i = 1; i < this.chain.length; i++) {
       const currentBlock = this.chain[i];
       const previousBlock = this.chain[i - 1];
 
@@ -47,15 +53,15 @@ class BlockChain {
       }
     }
 
-    return true
+    return true;
   }
 
-  summary (): string {
+  summary(): string {
     return `@@@@@@ BlockChain Summary @@@@@@\n
     Blocks created: ${this.chain.length}\n
     Lastest hash: ${this.getLatestBlock().hash}\n
     Valid: ${this.isValid()}\n
-    --------------------------------------------------------------------`
+    --------------------------------------------------------------------`;
   }
 }
 

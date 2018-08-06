@@ -14,7 +14,7 @@ class Block {
     timestamp: Date,
     data: any,
     previousHash: string = '',
-    difficulty: number
+    difficulty: number,
   ) {
     this.index = index;
     this.timestamp = timestamp;
@@ -30,12 +30,15 @@ class Block {
         this.timestamp.toString() +
         JSON.stringify(this.data) +
         this.previousHash +
-        this.nonce
+        this.nonce,
     ).toString();
   }
 
-  mine () {
-    while(this.hash.substring(0, this.difficulty) !== Array(this.difficulty + 1).join("0")) {
+  mine() {
+    while (
+      this.hash.substring(0, this.difficulty) !==
+      Array(this.difficulty + 1).join('0')
+    ) {
       this.nonce++;
       this.hash = this.calculateHash();
     }
