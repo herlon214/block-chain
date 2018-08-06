@@ -2,6 +2,7 @@ import Block from './Block';
 
 class BlockChain {
   public chain: Block[];
+  private difficulty = 4;
 
   constructor() {
     this.chain = [this.createGenesisBlock()];
@@ -13,6 +14,7 @@ class BlockChain {
       new Date('Sun Aug 05 2018 21:49:36 GMT-0400 (Amazon Standard Time)'),
       '{"totalCoins": 1000}',
       '',
+      this.difficulty
     );
   }
 
@@ -25,7 +27,10 @@ class BlockChain {
     const index = latestBlock.index + 1;
     const timestamp = new Date();
 
-    this.chain.push(new Block(index, timestamp, data, latestBlock.hash));
+    const block = new Block(index, timestamp, data, latestBlock.hash, this.difficulty);
+    block.mine();
+
+    this.chain.push(block);
   }
 
   isValid (): boolean {
